@@ -43,15 +43,16 @@ TEST(BowlingScoreCalculator, CalcScoreSpare)
 
     cout<<"Введите количество фреймов:"<<endl;
     cin>>cnt_frames;
-    for(int i=0;i<cnt_frames;i++) //фреймы
-    {
+    if(cnt_frames==0) return;
+    int i=0;
+    do{
         vector<unsigned short> frame;
 	for(int j=0;j<2;j++) //броски
 	{
 	    unsigned short pins;
 	    cout<<"Фрейм "<<i+1<<", бросок "<<j+1<<endl<<"Введите количество сбитых кеглей:"<<endl;
 	    cin>>pins;
-	    if(pins>10)
+	    if(pins>10 || j>0 && pins+frame[j-1]>10)
 	    {
 		cout<< "\033[" << 31 << "m" <<"Значение не должно быть больше 10."<< "\033[" << 39 << "m"<<endl;
 		j--;
@@ -73,6 +74,29 @@ TEST(BowlingScoreCalculator, CalcScoreSpare)
     	    ASSERT_EQ(calculate_score(game,i), current_sum); //проверка результата предыдущего фрейма
 
 	prev_frame_result=current_sum;
+    } while(++i<cnt_frames); //фреймы
+
+    cout<< "\033[" << 32 << "m"<<"Бонусные броски"<< "\033[" << 39 << "m"<<endl;
+    unsigned short frame10_result = accumulate(game[i-1].begin(), game[i-1].begin()+game[i-1].size()-1,0);
+    if(frame10_result==10) //проверка десятого фрейма
+    {
+        vector<unsigned short> frame;
+        for(int j=0;j<1;j++) //броски
+        {
+	    unsigned short pins;
+	    cout<<"Фрейм "<<i+1<<", бросок "<<j+1<<endl<<"Введите количество сбитых кеглей:"<<endl;
+	    cin>>pins;
+	    if(pins>10)
+	    {
+	        cout<< "\033[" << 31 << "m" <<"Значение не должно быть больше 10."<< "\033[" << 39 << "m"<<endl;
+	        j--;
+	        continue;
+	    }
+	    frame.push_back(pins);
+	}
+	game.push_back(frame);
+        prev_frame_result+=frame[0];
+	ASSERT_EQ(calculate_score(game,i), prev_frame_result); //проверка результата предыдущего фрейма
     }
 
     //печать сохранённой игры
@@ -97,7 +121,9 @@ TEST(BowlingScoreCalculator, CalcScoreStrike)
 
     cout<<"Введите количество фреймов:"<<endl;
     cin>>cnt_frames;
-    for(int i=0;i<cnt_frames;i++) //фреймы
+    if(cnt_frames==0) return;
+    int i=0;
+    do
     {
         vector<unsigned short> frame;
 	for(int j=0;j<2;j++) //броски
@@ -105,7 +131,7 @@ TEST(BowlingScoreCalculator, CalcScoreStrike)
 	    unsigned short pins;
 	    cout<<"Фрейм "<<i+1<<", бросок "<<j+1<<endl<<"Введите количество сбитых кеглей:"<<endl;
 	    cin>>pins;
-	    if(pins>10)
+	    if(pins>10 || j>0 && pins+frame[j-1]>10)
 	    {
 		cout<< "\033[" << 31 << "m" <<"Значение не должно быть больше 10."<< "\033[" << 39 << "m"<<endl;
 		j--;
@@ -128,6 +154,30 @@ TEST(BowlingScoreCalculator, CalcScoreStrike)
     	    ASSERT_EQ(calculate_score(game,i), current_sum); //проверка результата предыдущего фрейма
 
 	prev_frame_result=current_sum;
+    }  while(++i<cnt_frames); //фреймы
+
+    cout<< "\033[" << 32 << "m"<<"Бонусные броски"<< "\033[" << 39 << "m"<<endl;
+    unsigned short frame10_result = accumulate(game[i-1].begin(), game[i-1].begin()+game[i-1].size()-1,0);
+    if(frame10_result==10) //проверка десятого фрейма
+    {
+        vector<unsigned short> frame;
+        for(int j=0;j<2;j++) //броски
+        {
+	    unsigned short pins;
+	    cout<<"Фрейм "<<i+1<<", бросок "<<j+1<<endl<<"Введите количество сбитых кеглей:"<<endl;
+	    cin>>pins;
+	    if(pins>10)
+	    {
+	        cout<< "\033[" << 31 << "m" <<"Значение не должно быть больше 10."<< "\033[" << 39 << "m"<<endl;
+	        j--;
+	        continue;
+	    }
+	    frame.push_back(pins);
+	}
+	game.push_back(frame);
+        unsigned short current_frame_result=accumulate(frame.begin(), frame.end(), 0);
+        prev_frame_result+=current_frame_result;
+	ASSERT_EQ(calculate_score(game,i), prev_frame_result); //проверка результата предыдущего фрейма
     }
 
     //печать сохранённой игры
