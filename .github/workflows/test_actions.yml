@@ -1,12 +1,13 @@
 name: My First Workflow
 
-on: [push]
-
+on:  
+  push:
+    branches: [ "test-actions" ]
 jobs:
   build:
     runs-on: ubuntu-latest # Runs on an Ubuntu runner
 
     steps:
       - uses: actions/checkout@v4 # Checks out your repository code
-      - name: Run a simple script
-        run: echo "Тест workflow."
+      - name: Run script
+        run: echo "Тест test-actions workflow."
