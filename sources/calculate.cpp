@@ -1,14 +1,12 @@
 #include <iostream>
-#include <numeric>
+
 #include "calculate.h"
 
-using namespace std;
 
-unsigned short calculate_score(vector<unsigned short>& frame)
+std::string calculate_score()
 {
-    unsigned short result=0;
+    std::string tmp_string = "Hello from ";
+    tmp_string.append(__FUNCTION__);
 
-    result=accumulate(frame.begin(),frame.end(),0);
-
-    return result;
+    return tmp_string;
 }
