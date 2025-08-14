@@ -1,0 +1,14 @@
+name: My First Workflow
+
+on:
+ pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Runs on an Ubuntu runner
+
+    steps:
+      - uses: actions/checkout@v4 # Checks out your repository code
+      - name: Run script
+        run: echo "Тест test-actions workflow."

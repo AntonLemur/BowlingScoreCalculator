@@ -1,5 +1,3 @@
-#include <vector>
+#include <string>
 
-using namespace std;
-
-unsigned short calculate_score(vector<unsigned short>& frame);
+std::string calculate_score();
