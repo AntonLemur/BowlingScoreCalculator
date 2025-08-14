@@ -1,7 +1,8 @@
 name: My First Workflow
 
-on: [push] # Triggers on every push to the repository
-
+on:
+  push:
+    branches: [ "test-actions" ]
 jobs:
   build:
     runs-on: ubuntu-latest # Runs on an Ubuntu runner
@@ -9,4 +10,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4 # Checks out your repository code
       - name: Run a simple script
-        run: echo "Hello, GitHub Actions!"
+        run: echo "Тест workflow."
