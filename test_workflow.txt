@@ -1,2 +1,2 @@
 тест работы workflow
-on push отдельной ветки
+on push ветки
