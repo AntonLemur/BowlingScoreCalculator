@@ -1,9 +1,8 @@
 name: My First Workflow
 
 on:
-  push:
-    branches: 
-      - 'test-actions/**'
+ pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
