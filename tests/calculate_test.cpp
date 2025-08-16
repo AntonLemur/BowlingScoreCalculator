@@ -23,7 +23,8 @@ TEST(BowlingScoreCalculator, CalcScoreOneOpenFrame)
 
 TEST(BowlingScoreCalculator, CalcScoreSpare)
 {
-    vector<vector<unsigned short>> game={{1,9},{1,2}}; //игра
+    vector<vector<unsigned short>> game_const={{1,9},{1,2}}; //игра
+    vector<vector<unsigned short>> game=game_const;
 
     cout<<"game: "<<endl;
     for_each(game.begin(), game.end(),
