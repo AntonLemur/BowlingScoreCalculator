@@ -1,0 +1,48 @@
+#include <gtest/gtest.h>
+#include <iostream>
+#include <vector>
+#include <sstream>
+#include <algorithm>
+#include "calculate.h"
+
+using namespace std;
+
+// TEST(TEST_SUITE, TEST_CASE)
+
+TEST(BowlingScoreCalculator, CalcScoreOneOpenFrame)
+{
+    unsigned short frame_result=0;
+    vector<unsigned short> frame={1,2};
+    
+    for(int j=0;j<frame.size();j++)
+	cout<<"Сбитых кеглей "<<frame[j]<<", результат фрейма "<<(frame_result+=frame[j])<<endl;
+    
+    cout<<"Тест EXPECT_EQ(calculate_score(frame), 3)"<<endl;
+    EXPECT_EQ(calculate_score(frame), 3);
+}
+
+TEST(BowlingScoreCalculator, CalcScoreSpare)
+{
+    vector<vector<unsigned short>> game_const={{1,9},{1,2}}; //игра
+    vector<vector<unsigned short>> game=game_const;
+
+    cout<<"game: "<<endl;
+    for_each(game.begin(), game.end(),
+        [](const vector<unsigned short>& frame) {
+            stringstream ss;
+            for_each(frame.begin(), frame.end(), 
+                [&ss](unsigned short item) {
+                    ss << item << ",";
+                });
+        string s=ss.str();
+        s.pop_back();
+            cout<<"["<<s<<"]"<<endl;
+    });
+
+    unsigned short res=calculate_score_spare(game,1);
+    cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 1+9+1)"<<endl;
+    //цена фрейма фактически не записывается до тех пор, пока вы не перейдете к следующему фрейму
+    EXPECT_EQ(game[0][game[0].size()-1], 1+9+1); //проверка результата предыдущего фрейма
+    cout<<"Тест EXPECT_EQ(game[1][game[1].size()-1], 1+9+1+1+2)"<<endl;
+    EXPECT_EQ(game[1][game[1].size()-1], 1+9+1+1+2); //проверка результата текущего фрейма
+}
