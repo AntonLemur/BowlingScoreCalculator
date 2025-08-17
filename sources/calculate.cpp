@@ -7,34 +7,38 @@ using namespace std;
 unsigned short calculate_score(vector<vector<unsigned short>>& game, int i)
 {
     unsigned short result=0;
-    
+    unsigned short current_sum=0;
+    unsigned short prev_sum=0;
+
+    current_sum=accumulate(game[i].begin(), game[i].end(), 0); //результат текущего  фрейма
     if(i>0)
     {
-        result=accumulate(game[i-1].begin(),game[i-1].end(),0);
-	if(result==10)
-	    if(game[i-1].size()==2) //спэа 
-    		game[i-1][game[i-1].size()-1]=result+game[i][0]; //"Spare считается как 10 кеглей плюс количество кеглей, сбитых в следующем броске"
+	prev_sum=accumulate(game[i-1].begin(), game[i-1].begin() + game[i-1].size()-1, 0); //отдельный результат предыдущего фрейма
+	if(prev_sum==10)
+	    if(game[i-1].size()==3) //спэа 
+    		game[i-1][game[i-1].size()-1]+=game[i][0]; //"Spare считается как 10 кеглей плюс количество кеглей, сбитых в следующем броске"
 	    else //страйк
     	    {
-		if(i>1) //двойные, тройные
+		if(i>1)
 		{
-		    if(game[i-2].size()==1) //если два фрейма назад был страйк
+		     //двойные, тройные
+		    if(game[i-2].size()==2 && game[i-1].size()==2) //если перед текущим фреймом были два страйка подряд 
 		    {
-	    		game[i-2][0]+=game[i][0];
-	    		game[i-1][0]+=game[i-2][0];
+			//цена фрейма фактически не записывается до тех пор, пока вы не перейдете к следующему фрейму
+	    		game[i-2][1]+=game[i][0];
+			//обновляем общий результат предыдущего фрейма, туда прилетает и с предыдущего(i-2) и с текущего
+			game[i].size()==1?game[i-1][1]+=game[i][0]*2:game[i-1][1]+=game[i][0]+current_sum; 
 		    }
 		    else
-			game[i-1][game[i-1].size()-1]+=accumulate(game[i].begin(),game[i].end(),0); //"Для strike вы добавляете значение следующих двух бросков к 10 кеглям"
+			game[i-1][game[i-1].size()-1]+=current_sum; //обновляем общий результат предыдущего фрейма
 		}
 		else
-		    game[i-1][game[i-1].size()-1]+=accumulate(game[i].begin(),game[i].end(),0); //"Для strike вы добавляете значение следующих двух бросков к 10 кеглям"
+		    game[i-1][game[i-1].size()-1]+=current_sum; //обновляем общий результат предыдущего фрейма
     	    }
-	//обновляем текущий фрейм
-	result=accumulate(game[i].begin(),game[i].end(),0);
-	game[i][game[i].size()-1]=result+game[i-1][game[i-1].size()-1];
+        game[i].push_back(game[i-1][game[i-1].size()-1]+current_sum); //добавляем элемент общего результата для текущего фрейма
     }
     else
-        result=accumulate(game[i].begin(),game[i].end(),0);
+        game[i].push_back(current_sum); //добавляем элемент общего результата для текущего фрейма
 
     return result;
 }
