@@ -18,7 +18,7 @@ TEST(BowlingScoreCalculator, CalcScoreOneOpenFrame)
     for(int j=0;j<game[0].size();j++)
 	cout<<"Сбитых кеглей "<<game[0][j]<<", результат фрейма "<<(frame_result+=game[0][j])<<endl;
     
-    unsigned short res=calculate_score(game,0);
+    calculate_score(game,0);
     cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 3)"<<endl;
     EXPECT_EQ(game[0][game[0].size()-1], 1+2);
 }
@@ -41,8 +41,8 @@ TEST(BowlingScoreCalculator, CalcScoreSpare)
             cout<<"["<<s<<"]"<<endl;
     });
 
-    unsigned short res=calculate_score(game,0);
-    res=calculate_score(game,1);
+    calculate_score(game,0);
+    calculate_score(game,1);
     cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 1+9+1)"<<endl;
     //цена фрейма фактически не записывается до тех пор, пока вы не перейдете к следующему фрейму
     EXPECT_EQ(game[0][game[0].size()-1], 1+9+1); //проверка результата предыдущего фрейма
@@ -68,8 +68,8 @@ TEST(BowlingScoreCalculator, CalcScoreStrike)
             cout<<"["<<s<<"]"<<endl;
     });
 
-    unsigned short res=calculate_score(game,0);
-    res=calculate_score(game,1);
+    calculate_score(game,0);
+    calculate_score(game,1);
     cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 10+1+2)"<<endl;
     //цена фрейма фактически не записывается до тех пор, пока вы не перейдете к следующему фрейму
     EXPECT_EQ(game[0][game[0].size()-1], 10+1+2); //проверка результата предыдущего фрейма
@@ -95,9 +95,9 @@ TEST(BowlingScoreCalculator, CalcScoreDoubleStrike)
             cout<<"["<<s<<"]"<<endl;
     });
 
-    unsigned short res=calculate_score(game,0);
-    res=calculate_score(game,1);
-    res=calculate_score(game,2);
+    calculate_score(game,0);
+    calculate_score(game,1);
+    calculate_score(game,2);
     cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 10+10+1)"<<endl;
     //цена фрейма фактически не записывается до тех пор, пока вы не перейдете к следующему фрейму
     EXPECT_EQ(game[0][game[0].size()-1], 10+10+1); //проверка результата предпредпоследнего фрейма
@@ -125,9 +125,9 @@ TEST(BowlingScoreCalculator, CalcScoreTripleStrike)
             cout<<"["<<s<<"]"<<endl;
     });
 
-    unsigned short res=calculate_score(game,0);
-    res=calculate_score(game,1);
-    res=calculate_score(game,2);
+    calculate_score(game,0);
+    calculate_score(game,1);
+    calculate_score(game,2);
     cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 10+10+10)"<<endl;
     //цена фрейма фактически не записывается до тех пор, пока вы не перейдете к следующему фрейму
     EXPECT_EQ(game[0][game[0].size()-1], 10+10+10); //проверка результата предпредпоследнего фрейма
@@ -157,7 +157,7 @@ TEST(BowlingScoreCalculator, CalcScoreMax)
 
     unsigned short res=0;
     for(int i=0;i<game.size();i++)
-	res=calculate_score(game,i);
+	calculate_score(game,i);
     
     for(int i=0;i<game.size()-2;i++)
     {
@@ -191,7 +191,7 @@ TEST(BowlingScoreCalculator, CalcScoreRandom)
 
     unsigned short res=0;
     for(int i=0;i<game.size();i++)
-	res=calculate_score(game,i);
+	calculate_score(game,i);
     
     for(int i=0;i<game.size();i++)
     {
@@ -225,7 +225,7 @@ TEST(BowlingScoreCalculator, CalcScoreAnotherOneRandom)
 
     unsigned short res=0;
     for(int i=0;i<game.size();i++)
-	res=calculate_score(game,i);
+	calculate_score(game,i);
     
     for(int i=0;i<game.size();i++)
     {
@@ -259,7 +259,7 @@ TEST(BowlingScoreCalculator, CalcScoreAndOneMoreRandom)
 
     unsigned short res=0;
     for(int i=0;i<game.size();i++)
-	res=calculate_score(game,i);
+	calculate_score(game,i);
     
     for(int i=0;i<game.size()-1;i++)
     {

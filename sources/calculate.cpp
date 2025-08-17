@@ -4,9 +4,8 @@
 
 using namespace std;
 
-unsigned short calculate_score(vector<vector<unsigned short>>& game, int i)
+void calculate_score(vector<vector<unsigned short>>& game, int i)
 {
-    unsigned short result=0;
     unsigned short current_sum=0;
     unsigned short prev_sum=0;
 
@@ -39,6 +38,4 @@ unsigned short calculate_score(vector<vector<unsigned short>>& game, int i)
     }
     else
         game[i].push_back(current_sum); //добавляем элемент общего результата для текущего фрейма
-
-    return result;
 }
