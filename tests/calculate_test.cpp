@@ -66,9 +66,9 @@ TEST(BowlingScoreCalculator, CalcScoreStrike)
     });
 
     unsigned short res=calculate_score(game,1);
-    cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 1+9+1)"<<endl;
+    cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 10+1+2)"<<endl;
     //цена фрейма фактически не записывается до тех пор, пока вы не перейдете к следующему фрейму
     EXPECT_EQ(game[0][game[0].size()-1], 10+1+2); //проверка результата предыдущего фрейма
-    cout<<"Тест EXPECT_EQ(game[1][game[1].size()-1], 1+9+1+1+2)"<<endl;
+    cout<<"Тест EXPECT_EQ(game[1][game[1].size()-1], 10+1+2+1+2)"<<endl;
     EXPECT_EQ(game[1][game[1].size()-1], 10+1+2+1+2); //проверка результата текущего фрейма
 }
