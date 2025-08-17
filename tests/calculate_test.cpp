@@ -199,3 +199,37 @@ TEST(BowlingScoreCalculator, CalcScoreRandom)
 	EXPECT_EQ(game[i][game[i].size()-1], frames_results[i].first);
     }    
 }
+
+TEST(BowlingScoreCalculator, CalcScoreAnotherOneRandom)
+{
+    vector<vector<unsigned short>> game_const={{4,6},{10},{8,2},{4,5},{9,0},{3,0},{9,1},{9,0},{8,2},{9,0}}; //броски 
+    vector<vector<unsigned short>> game=game_const;//игра
+    vector<pair<int,string>> frames_results={{4+6+10,"Тест EXPECT_EQ(game[0][game[0].size()-1],4+6+10)"},{20+10+8+2,"Тест EXPECT_EQ(game[1][game[1].size()-1],20+10+8+2)"}
+	,{40+8+2+4,"Тест EXPECT_EQ(game[2][game[2].size()-1],40+8+2+4)"},{54+4+5,"Тест EXPECT_EQ(game[3][game[3].size()-1],54+4+5)"}
+	,{63+9+0,"Тест EXPECT_EQ(game[4][game[4].size()-1],63+9+0)"},{72+3+0,"Тест EXPECT_EQ(game[5][game[5].size()-1],72+3+0)"}
+	,{75+9+1+9,"Тест EXPECT_EQ(game[6][game[6].size()-1],75+9+1+9)"},{94+9+0,"Тест EXPECT_EQ(game[7][game[7].size()-1],94+9+0)"}
+	,{103+8+2+9,"Тест EXPECT_EQ(game[8][game[8].size()-1],103+8+2+9)"},{122+9+0,"Тест EXPECT_EQ(game[9][game[9].size()-1],122+9+0)"}}; //результаты фреймов 
+
+    cout<<"game: "<<endl;
+    for_each(game.begin(), game.end(),
+        [](const vector<unsigned short>& frame) {
+            stringstream ss;
+            for_each(frame.begin(), frame.end(), 
+                [&ss](unsigned short item) {
+                    ss << item << ",";
+                });
+        string s=ss.str();
+        s.pop_back();
+            cout<<"["<<s<<"]"<<endl;
+    });
+
+    unsigned short res=0;
+    for(int i=0;i<game.size();i++)
+	res=calculate_score(game,i);
+    
+    for(int i=0;i<game.size();i++)
+    {
+	cout<<frames_results[i].second<<endl;
+	EXPECT_EQ(game[i][game[i].size()-1], frames_results[i].first);
+    }    
+}
