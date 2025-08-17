@@ -136,3 +136,32 @@ TEST(BowlingScoreCalculator, CalcScoreTripleStrike)
     cout<<"Тест EXPECT_EQ(game[2][game[2].size()-1], 10+10+10+10+10+10)"<<endl;
     EXPECT_EQ(game[2][game[2].size()-1], 10+10+10+10+10+10); //проверка результата текущего фрейма
 }
+
+TEST(BowlingScoreCalculator, CalcScoreMax)
+{
+    vector<vector<unsigned short>> game_const={{10},{10},{10},{10},{10},{10},{10},{10},{10},{10},{10},{10}}; //броски 
+    vector<vector<unsigned short>> game=game_const;//игра
+
+    cout<<"game: "<<endl;
+    for_each(game.begin(), game.end(),
+        [](const vector<unsigned short>& frame) {
+            stringstream ss;
+            for_each(frame.begin(), frame.end(), 
+                [&ss](unsigned short item) {
+                    ss << item << ",";
+                });
+        string s=ss.str();
+        s.pop_back();
+            cout<<"["<<s<<"]"<<endl;
+    });
+
+    unsigned short res=0;
+    for(int i=0;i<game.size();i++)
+	res=calculate_score(game,i);
+    
+    for(int i=0;i<game.size()-2;i++)
+    {
+	cout<<"Тест EXPECT_EQ(game["<<i<<"][game[<<"<<i<<"].size()-1],"<<30*(i+1)<<")"<<endl;
+	EXPECT_EQ(game[i][game[i].size()-1], 30*(i+1));
+    }    
+}
