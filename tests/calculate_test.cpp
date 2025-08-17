@@ -12,13 +12,13 @@ using namespace std;
 TEST(BowlingScoreCalculator, CalcScoreOneOpenFrame)
 {
     unsigned short frame_result=0;
-    vector<unsigned short> frame={1,2};
+    vector<vector<unsigned short>> game={{1,2}};
     
-    for(int j=0;j<frame.size();j++)
-	cout<<"Сбитых кеглей "<<frame[j]<<", результат фрейма "<<(frame_result+=frame[j])<<endl;
+    for(int j=0;j<game[0].size();j++)
+	cout<<"Сбитых кеглей "<<game[0][j]<<", результат фрейма "<<(frame_result+=game[0][j])<<endl;
     
     cout<<"Тест EXPECT_EQ(calculate_score(frame), 3)"<<endl;
-    EXPECT_EQ(calculate_score(frame), 3);
+    EXPECT_EQ(calculate_score(game,0), 3);
 }
 
 TEST(BowlingScoreCalculator, CalcScoreSpare)
@@ -39,7 +39,7 @@ TEST(BowlingScoreCalculator, CalcScoreSpare)
             cout<<"["<<s<<"]"<<endl;
     });
 
-    unsigned short res=calculate_score_spare(game,1);
+    unsigned short res=calculate_score(game,1);
     cout<<"Тест EXPECT_EQ(game[0][game[0].size()-1], 1+9+1)"<<endl;
     //цена фрейма фактически не записывается до тех пор, пока вы не перейдете к следующему фрейму
     EXPECT_EQ(game[0][game[0].size()-1], 1+9+1); //проверка результата предыдущего фрейма
